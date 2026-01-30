@@ -2,26 +2,33 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Yei - Un espacio en el tiempo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* RESET Y CONFIGURACIÓN MÓVIL FIRST */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Georgia', serif;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            font-family: 'Georgia', 'Times New Roman', serif;
         }
         
         body {
             background-color: #0a0e17;
             color: #e6e6e6;
-            overflow-x: hidden;
-            min-height: 100vh;
+            line-height: 1.6;
             position: relative;
         }
         
-        /* Fondo con estética Dragon Raja */
+        /* FONDO OPTIMIZADO PARA MÓVIL */
         #background-scene {
             position: fixed;
             top: 0;
@@ -33,19 +40,20 @@
             overflow: hidden;
         }
         
-        /* Elementos del fondo */
+        /* LUNA MÓVIL */
         .moon {
             position: absolute;
-            top: 10%;
-            right: 10%;
-            width: 120px;
-            height: 120px;
+            top: 5%;
+            right: 5%;
+            width: 80px;
+            height: 80px;
             background: radial-gradient(circle at 30% 30%, #f9f3d5, #e8d9a5 70%, #c9b47a);
             border-radius: 50%;
-            box-shadow: 0 0 60px rgba(249, 243, 213, 0.5);
+            box-shadow: 0 0 40px rgba(249, 243, 213, 0.5);
             animation: moon-glow 8s infinite alternate;
         }
         
+        /* ESTRELLAS MÓVILES */
         .stars {
             position: absolute;
             width: 100%;
@@ -54,223 +62,204 @@
         
         .star {
             position: absolute;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
             animation: twinkle 3s infinite alternate;
         }
         
+        /* ELEMENTOS DEL PAISAJE (SIMPLIFICADOS PARA MÓVIL) */
         .cabin {
             position: absolute;
             bottom: 15%;
-            left: 10%;
-            width: 300px;
-            height: 200px;
+            left: 5%;
+            width: 150px;
+            height: 100px;
             background: linear-gradient(45deg, #3d291a, #5a3c22);
-            border-radius: 10px 10px 0 0;
-            box-shadow: -10px 0 20px rgba(0, 0, 0, 0.7);
+            border-radius: 5px 5px 0 0;
         }
         
         .cabin-roof {
             position: absolute;
-            top: -40px;
-            left: -10px;
-            width: 320px;
-            height: 50px;
+            top: -20px;
+            left: -5px;
+            width: 160px;
+            height: 25px;
             background: linear-gradient(to right, #2c1a0d, #4a2f1a);
             clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%);
         }
         
         .cabin-window {
             position: absolute;
-            top: 40px;
-            left: 40px;
-            width: 60px;
-            height: 60px;
+            top: 20px;
+            left: 20px;
+            width: 30px;
+            height: 30px;
             background-color: #f9e79f;
-            border-radius: 5px;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 3px;
         }
         
         .pool {
             position: absolute;
             bottom: 15%;
-            left: 40%;
-            width: 200px;
-            height: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 50px;
             background: linear-gradient(45deg, #1a5276, #2e86c1);
             border-radius: 50%;
             opacity: 0.7;
-            box-shadow: 0 0 20px rgba(46, 134, 193, 0.5);
         }
         
         .bench {
             position: absolute;
             bottom: 18%;
-            right: 20%;
-            width: 200px;
-            height: 80px;
+            right: 5%;
+            width: 100px;
+            height: 40px;
             background: linear-gradient(to bottom, #8b4513, #654321);
-            border-radius: 5px;
+            border-radius: 3px;
         }
         
         .silhouette {
             position: absolute;
-            width: 40px;
-            height: 100px;
+            width: 20px;
+            height: 50px;
             background-color: #111;
             border-radius: 50% 50% 0 0;
         }
         
         .silhouette-1 {
             bottom: 18%;
-            right: 25%;
+            right: 12%;
         }
         
         .silhouette-2 {
             bottom: 18%;
-            right: 35%;
+            right: 20%;
         }
         
         .flower-field {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 150px;
+            height: 80px;
             background: linear-gradient(to top, #0a3d24, #1e8449);
         }
         
-        .flower {
-            position: absolute;
-            width: 20px;
-            height: 40px;
-            background-color: #2ecc71;
-            bottom: 0;
-        }
-        
-        .flower-head {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            top: -15px;
-            left: -2.5px;
-        }
-        
-        .flower:nth-child(odd) .flower-head {
-            background-color: #e74c3c;
-        }
-        
-        .flower:nth-child(even) .flower-head {
-            background-color: #f1c40f;
-        }
-        
-        /* Contenido principal */
+        /* CONTENEDOR PRINCIPAL - OPTIMIZADO PARA TOCAR */
         .container {
-            max-width: 1000px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 30px;
-            z-index: 10;
+            padding: 15px;
             position: relative;
+            z-index: 10;
         }
         
+        /* HEADER MÓVIL */
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding-top: 20px;
+            margin-bottom: 20px;
+            padding-top: 10px;
         }
         
         h1 {
-            font-size: 3.5rem;
+            font-size: 2rem;
             color: #f9e79f;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(249, 231, 159, 0.5);
-            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 5px rgba(249, 231, 159, 0.5);
+            line-height: 1.2;
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             color: #aed6f1;
             font-style: italic;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
+            padding: 0 10px;
         }
         
         .dedication {
-            font-size: 1.1rem;
+            font-size: 0.85rem;
             color: #d5dbdb;
-            background-color: rgba(10, 14, 23, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #f9e79f;
-            margin-bottom: 30px;
+            background-color: rgba(10, 14, 23, 0.8);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #f9e79f;
+            margin-bottom: 20px;
+            line-height: 1.4;
         }
         
-        /* Contenedor del poema */
+        /* CONTENEDOR DEL POEMA - MEJOR LECTURA MÓVIL */
         .poem-container {
-            background-color: rgba(20, 30, 48, 0.8);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background-color: rgba(20, 30, 48, 0.85);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(249, 231, 159, 0.2);
+            backdrop-filter: blur(5px);
         }
         
         .poem-title {
-            font-size: 2.2rem;
+            font-size: 1.5rem;
             color: #f9e79f;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
             position: relative;
-            padding-bottom: 15px;
+            padding-bottom: 10px;
         }
         
         .poem-title::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 30%;
-            width: 40%;
-            height: 2px;
+            left: 20%;
+            width: 60%;
+            height: 1px;
             background: linear-gradient(to right, transparent, #f9e79f, transparent);
         }
         
         .poem-content {
-            font-size: 1.25rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.7;
             text-align: center;
             white-space: pre-line;
             color: #e6e6e6;
         }
         
         .poem-stanza {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
-        /* Controles interactivos */
+        /* BOTONES MÓVILES - MÁS GRANDES PARA TOCAR */
         .controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 25px 0;
+            padding: 0 5px;
         }
         
         .btn {
-            padding: 12px 25px;
+            padding: 16px 20px;
             background: linear-gradient(to right, #1a5276, #2e86c1);
             color: white;
             border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            border-radius: 12px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 55px;
         }
         
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(to right, #2e86c1, #3498db);
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .burned-rice-btn {
@@ -278,83 +267,91 @@
             font-weight: bold;
         }
         
-        .burned-rice-btn:hover {
+        .burned-rice-btn:active {
             background: linear-gradient(to right, #c0392b, #922b21);
         }
         
-        /* Mensajes emergentes */
+        /* MENSAJES EMERGENTES MÓVILES */
         .message-container {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(20, 30, 48, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 14, 23, 0.95);
             z-index: 1000;
-            max-width: 600px;
-            width: 90%;
-            border: 2px solid rgba(249, 231, 159, 0.3);
             display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s forwards;
         }
         
         .message-content {
-            font-size: 1.4rem;
-            color: #f9e79f;
+            background-color: rgba(20, 30, 48, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(249, 231, 159, 0.3);
+            max-width: 400px;
+            width: 100%;
             text-align: center;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #f9e79f;
+            line-height: 1.5;
+            position: relative;
         }
         
         .close-btn {
             position: absolute;
-            top: 15px;
+            top: 10px;
             right: 15px;
             background: none;
             border: none;
             color: #f9e79f;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
+            line-height: 1;
         }
         
-        /* Poemas adicionales */
+        /* POEMAS ADICIONALES MÓVILES */
         .additional-poem {
             display: none;
-            margin-top: 30px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             background-color: rgba(30, 40, 60, 0.7);
-            border-radius: 10px;
-            border-left: 4px solid #2ecc71;
+            border-radius: 8px;
+            border-left: 3px solid #2ecc71;
+            animation: slideUp 0.5s forwards;
         }
         
         .additional-poem-title {
             color: #2ecc71;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
         }
         
-        /* Pie de página */
+        /* FOOTER MÓVIL */
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
+            margin-top: 30px;
+            padding: 15px;
             color: #aed6f1;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             border-top: 1px solid rgba(174, 214, 241, 0.2);
         }
         
         .signature {
             font-family: 'Brush Script MT', cursive;
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #f9e79f;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         
-        /* Animaciones */
+        /* ANIMACIONES OPTIMIZADAS PARA MÓVIL */
         @keyframes moon-glow {
-            0% { box-shadow: 0 0 60px rgba(249, 243, 213, 0.5); }
-            100% { box-shadow: 0 0 100px rgba(249, 243, 213, 0.8); }
+            0% { box-shadow: 0 0 30px rgba(249, 243, 213, 0.5); }
+            100% { box-shadow: 0 0 60px rgba(249, 243, 213, 0.8); }
         }
         
         @keyframes twinkle {
@@ -363,12 +360,23 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* MEJORAS PARA TABLETS */
+        @media (min-width: 481px) and (max-width: 768px) {
             .container {
                 padding: 20px;
             }
@@ -378,35 +386,97 @@
             }
             
             .poem-container {
-                padding: 20px;
-            }
-            
-            .cabin, .pool, .bench {
-                transform: scale(0.7);
-            }
-            
-            .cabin {
-                left: 5%;
-            }
-            
-            .bench {
-                right: 10%;
+                padding: 25px;
             }
             
             .controls {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .cabin {
+                width: 200px;
+                height: 130px;
+            }
+            
+            .cabin-roof {
+                width: 210px;
+                height: 30px;
+                top: -25px;
+            }
+        }
+        
+        /* ORIENTACIÓN HORIZONTAL */
+        @media (max-height: 600px) and (orientation: landscape) {
+            header {
+                padding-top: 5px;
+                margin-bottom: 10px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 5px;
+            }
+            
+            .poem-container {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .poem-stanza {
+                margin-bottom: 10px;
+            }
+            
+            .controls {
+                margin: 15px 0;
+                gap: 8px;
             }
             
             .btn {
-                width: 100%;
-                max-width: 300px;
+                padding: 12px 15px;
+                min-height: 45px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* DISPOSITIVOS MÁS GRANDES (OPCIONAL) */
+        @media (min-width: 769px) {
+            .container {
+                max-width: 700px;
+                padding: 25px;
+            }
+            
+            .controls {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            }
+            
+            .btn:active {
+                transform: translateY(1px);
+            }
+        }
+        
+        /* MEJORAS DE ACCESIBILIDAD TÁCTIL */
+        @media (pointer: coarse) {
+            .btn {
+                min-height: 60px;
+            }
+            
+            .close-btn {
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Escena de fondo -->
+    <!-- ESCENA DE FONDO OPTIMIZADA -->
     <div id="background-scene">
         <div class="moon"></div>
         <div class="stars" id="stars-container"></div>
@@ -422,13 +492,13 @@
         <div class="flower-field" id="flower-field"></div>
     </div>
     
-    <!-- Contenido principal -->
+    <!-- CONTENIDO PRINCIPAL REORGANIZADO PARA MÓVIL -->
     <div class="container">
         <header>
             <h1>Para Yei</h1>
-            <div class="subtitle">Un espacio en el tiempo donde las palabras encuentran su significado</div>
+            <div class="subtitle">Un espacio donde las palabras encuentran su significado</div>
             <div class="dedication">
-                <i class="fas fa-quote-left"></i> Hay mensajes que llegan como una piedra tibia en el bolsillo: no pesan, pero te recuerdan que algo estuvo ahí todo el día. <i class="fas fa-quote-right"></i>
+                <i class="fas fa-quote-left"></i> Hay mensajes que llegan como una piedra tibia en el bolsillo <i class="fas fa-quote-right"></i>
             </div>
         </header>
         
@@ -499,7 +569,23 @@
                 </div>
             </div>
             
-            <!-- Poemas adicionales (inicialmente ocultos) -->
+            <!-- CONTROLES TÁCTILES -->
+            <div class="controls">
+                <button class="btn burned-rice-btn" id="burnedRiceBtn">
+                    <i class="fas fa-fire"></i> ¿Se te quemó el arroz?
+                </button>
+                <button class="btn" id="newPoemBtn">
+                    <i class="fas fa-feather-alt"></i> Nuevo poema
+                </button>
+                <button class="btn" id="surpriseBtn">
+                    <i class="fas fa-star"></i> Frase para Yei
+                </button>
+                <button class="btn" id="moonBtn">
+                    <i class="fas fa-moon"></i> Brillo lunar
+                </button>
+            </div>
+            
+            <!-- POEMAS ADICIONALES -->
             <div id="additional-poems">
                 <div class="additional-poem" id="poem1">
                     <h3 class="additional-poem-title">La Huella en el Aire</h3>
@@ -544,22 +630,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Controles interactivos -->
-            <div class="controls">
-                <button class="btn burned-rice-btn" id="burnedRiceBtn">
-                    <i class="fas fa-fire"></i> ¿Se te quemó el arroz? Oprime aquí
-                </button>
-                <button class="btn" id="newPoemBtn">
-                    <i class="fas fa-feather-alt"></i> Nuevo poema inspirado
-                </button>
-                <button class="btn" id="surpriseBtn">
-                    <i class="fas fa-star"></i> Frase especial para Yei
-                </button>
-                <button class="btn" id="moonBtn">
-                    <i class="fas fa-moon"></i> Brillo lunar
-                </button>
-            </div>
         </main>
         
         <footer>
@@ -569,169 +639,196 @@
         </footer>
     </div>
     
-    <!-- Mensaje emergente -->
+    <!-- MENSAJE EMERGENTE PARA TOCAR -->
     <div class="message-container" id="messageBox">
-        <button class="close-btn" id="closeMessageBtn">&times;</button>
-        <div class="message-content" id="messageText">
-            <!-- El mensaje se insertará aquí -->
+        <div class="message-content">
+            <button class="close-btn" id="closeMessageBtn">&times;</button>
+            <div id="messageText">
+                <!-- Mensaje aquí -->
+            </div>
         </div>
     </div>
 
     <script>
-        // Crear estrellas dinámicamente
-        const starsContainer = document.getElementById('stars-container');
-        for (let i = 0; i < 150; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = `${Math.random() * 3 + 1}px`;
-            star.style.height = star.style.width;
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.animationDelay = `${Math.random() * 3}s`;
-            starsContainer.appendChild(star);
-        }
-        
-        // Crear flores dinámicamente
-        const flowerField = document.getElementById('flower-field');
-        for (let i = 0; i < 25; i++) {
-            const flower = document.createElement('div');
-            flower.className = 'flower';
-            flower.style.left = `${Math.random() * 100}%`;
+        // Código JavaScript optimizado para móvil
+        document.addEventListener('DOMContentLoaded', function() {
+            // Crear estrellas (menos para móvil)
+            const starsContainer = document.getElementById('stars-container');
+            const starCount = window.innerWidth < 768 ? 80 : 150;
             
-            const flowerHead = document.createElement('div');
-            flowerHead.className = 'flower-head';
-            flower.appendChild(flowerHead);
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 3}s`;
+                starsContainer.appendChild(star);
+            }
             
-            flowerField.appendChild(flower);
-        }
-        
-        // Mensajes para el botón del arroz quemado
-        const burnedRiceMessages = [
-            "¡Grandísima pendeja, te quiero! ❤️",
-            "Aunque se te queme el arroz, siempre serás la mejor chef de mi corazón. 🍚💖",
-            "El arroz quemado huele a amor... o eso digo yo para no admitir que olvidaste la hornilla. 😉",
-            "No importa si se quema la comida, lo importante es que tú no sepas quemar mi corazón. 🔥❤️",
-            "Arroz quemado = excusa perfecta para pedir pizza y seguir hablando contigo. 🍕"
-        ];
-        
-        // Frases especiales para Yei
-        const specialMessages = [
-            "Yei, tu nombre es la sílaba que le falta al silencio para volverse canción.",
-            "Hay universos enteros en la manera en que dices 'hola' después de un día largo.",
-            "Eres la continuidad en un mundo de interrupciones.",
-            "Contigo aprendí que la distancia no es espacio vacío, sino un puente hecho de paciencia.",
-            "Tu risa es el único mapa que necesito para no perderme."
-        ];
-        
-        // Frases de libros inspiradas en el poema
-        const bookQuotes = [
-            "«El amor no necesita ser visto para ser sentido, como el viento que mueve las hojas sin mostrarse.» - De 'El eco de lo invisible'",
-            "«Hay personas que son como ciudades lejanas: aunque no las visites, saber que existen cambia tu geografía emocional.» - De 'Mapas del alma'",
-            "«La nostalgia no es añorar lo que fue, sino reconocer lo que sigue siendo.» - De 'Crónicas del tiempo suspendido'",
-            "«A veces, la presencia más real es la que habita en los espacios entre las palabras.» - De 'El arte de la ausencia'",
-            "«Amamos no solo con los encuentros, sino con la certeza de que hay alguien en el mundo que nos espera en el silencio.» - De 'Teoría de los afectos distantes'"
-        ];
-        
-        // Referencias a elementos del DOM
-        const burnedRiceBtn = document.getElementById('burnedRiceBtn');
-        const newPoemBtn = document.getElementById('newPoemBtn');
-        const surpriseBtn = document.getElementById('surpriseBtn');
-        const moonBtn = document.getElementById('moonBtn');
-        const messageBox = document.getElementById('messageBox');
-        const messageText = document.getElementById('messageText');
-        const closeMessageBtn = document.getElementById('closeMessageBtn');
-        const additionalPoems = document.querySelectorAll('.additional-poem');
-        
-        // Mostrar mensaje emergente
-        function showMessage(message) {
-            messageText.innerHTML = message;
-            messageBox.style.display = 'block';
-            messageBox.style.animation = 'fadeIn 0.5s forwards';
-        }
-        
-        // Ocultar mensaje emergente
-        function hideMessage() {
-            messageBox.style.display = 'none';
-        }
-        
-        // Mostrar un poema adicional aleatorio
-        function showRandomPoem() {
-            // Ocultar todos los poemas primero
-            additionalPoems.forEach(poem => {
-                poem.style.display = 'none';
+            // Crear flores (menos para móvil)
+            const flowerField = document.getElementById('flower-field');
+            const flowerCount = window.innerWidth < 768 ? 15 : 25;
+            
+            for (let i = 0; i < flowerCount; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.style.left = `${Math.random() * 100}%`;
+                
+                const flowerHead = document.createElement('div');
+                flowerHead.className = 'flower-head';
+                flower.appendChild(flowerHead);
+                
+                flowerField.appendChild(flower);
+            }
+            
+            // Datos para interactividad
+            const burnedRiceMessages = [
+                "¡Grandísima pendeja, te quiero! ❤️",
+                "Aunque se te queme el arroz, siempre serás la mejor chef de mi corazón. 🍚💖",
+                "El arroz quemado huele a amor... o eso digo yo. 😉",
+                "No importa si se quema la comida, lo importante es que tú no sepas quemar mi corazón. 🔥❤️",
+                "Arroz quemado = excusa perfecta para pedir pizza. 🍕"
+            ];
+            
+            const specialMessages = [
+                "Yei, tu nombre es la sílaba que le falta al silencio para volverse canción.",
+                "Hay universos enteros en la manera en que dices 'hola' después de un día largo.",
+                "Eres la continuidad en un mundo de interrupciones.",
+                "Contigo aprendí que la distancia no es espacio vacío, sino un puente hecho de paciencia.",
+                "Tu risa es el único mapa que necesito para no perderme."
+            ];
+            
+            // Elementos del DOM
+            const burnedRiceBtn = document.getElementById('burnedRiceBtn');
+            const newPoemBtn = document.getElementById('newPoemBtn');
+            const surpriseBtn = document.getElementById('surpriseBtn');
+            const moonBtn = document.getElementById('moonBtn');
+            const messageBox = document.getElementById('messageBox');
+            const messageText = document.getElementById('messageText');
+            const closeMessageBtn = document.getElementById('closeMessageBtn');
+            const additionalPoems = document.querySelectorAll('.additional-poem');
+            
+            // Mostrar mensaje (mejorado para táctil)
+            function showMessage(message) {
+                messageText.innerHTML = message;
+                messageBox.style.display = 'flex';
+                
+                // Cerrar automáticamente después de 5 segundos en móvil
+                if (window.innerWidth < 768) {
+                    setTimeout(hideMessage, 5000);
+                }
+            }
+            
+            function hideMessage() {
+                messageBox.style.display = 'none';
+            }
+            
+            // Mostrar poema aleatorio
+            function showRandomPoem() {
+                additionalPoems.forEach(poem => {
+                    poem.style.display = 'none';
+                });
+                
+                const randomIndex = Math.floor(Math.random() * additionalPoems.length);
+                additionalPoems[randomIndex].style.display = 'block';
+                
+                // Scroll suave
+                additionalPoems[randomIndex].scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center',
+                    inline: 'center'
+                });
+            }
+            
+            // Cambiar brillo lunar
+            function changeMoonGlow() {
+                const moon = document.querySelector('.moon');
+                const currentBoxShadow = window.getComputedStyle(moon).boxShadow;
+                
+                if (currentBoxShadow.includes('30px')) {
+                    moon.style.boxShadow = '0 0 70px rgba(249, 243, 213, 0.9)';
+                    showMessage("La luna brilla más fuerte cuando pienso en ti, Yei. 🌕");
+                } else {
+                    moon.style.boxShadow = '0 0 30px rgba(249, 243, 213, 0.5)';
+                    showMessage("El brillo lunar se ajusta a la calma de esta noche. 🌙");
+                }
+            }
+            
+            // Event listeners táctiles
+            burnedRiceBtn.addEventListener('click', function() {
+                const randomIndex = Math.floor(Math.random() * burnedRiceMessages.length);
+                showMessage(burnedRiceMessages[randomIndex]);
             });
             
-            // Mostrar un poema aleatorio
-            const randomIndex = Math.floor(Math.random() * additionalPoems.length);
-            additionalPoems[randomIndex].style.display = 'block';
-            additionalPoems[randomIndex].style.animation = 'fadeIn 0.8s forwards';
+            newPoemBtn.addEventListener('click', showRandomPoem);
             
-            // Desplazar hacia el poema
-            additionalPoems[randomIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        
-        // Cambiar el brillo de la luna
-        function changeMoonGlow() {
-            const moon = document.querySelector('.moon');
-            const currentBoxShadow = window.getComputedStyle(moon).boxShadow;
+            surpriseBtn.addEventListener('click', function() {
+                const randomIndex = Math.floor(Math.random() * specialMessages.length);
+                showMessage(specialMessages[randomIndex]);
+            });
             
-            if (currentBoxShadow.includes('60px')) {
-                moon.style.boxShadow = '0 0 120px rgba(249, 243, 213, 0.9)';
-                showMessage("La luna brilla más fuerte cuando pienso en ti, Yei. 🌕");
-            } else {
-                moon.style.boxShadow = '0 0 60px rgba(249, 243, 213, 0.5)';
-                showMessage("El brillo lunar se ajusta a la calma de esta noche contigo. 🌙");
+            moonBtn.addEventListener('click', changeMoonGlow);
+            
+            closeMessageBtn.addEventListener('click', hideMessage);
+            
+            // Cerrar mensaje tocando fuera
+            messageBox.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideMessage();
+                }
+            });
+            
+            // Efecto de escritura en título (opcional)
+            const title = document.querySelector('h1');
+            const originalText = title.textContent;
+            
+            // Solo en dispositivos no táctiles o si es rápido
+            if (!('ontouchstart' in window) || window.innerWidth > 768) {
+                title.textContent = '';
+                let i = 0;
+                
+                function typeWriter() {
+                    if (i < originalText.length) {
+                        title.textContent += originalText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 100);
+                    }
+                }
+                
+                setTimeout(typeWriter, 300);
             }
-        }
-        
-        // Event listeners
-        burnedRiceBtn.addEventListener('click', function() {
-            const randomIndex = Math.floor(Math.random() * burnedRiceMessages.length);
-            showMessage(burnedRiceMessages[randomIndex]);
-        });
-        
-        newPoemBtn.addEventListener('click', showRandomPoem);
-        
-        surpriseBtn.addEventListener('click', function() {
-            // Combinar mensajes especiales y frases de libros
-            const allMessages = [...specialMessages, ...bookQuotes];
-            const randomIndex = Math.floor(Math.random() * allMessages.length);
-            showMessage(allMessages[randomIndex]);
-        });
-        
-        moonBtn.addEventListener('click', changeMoonGlow);
-        
-        closeMessageBtn.addEventListener('click', hideMessage);
-        
-        // Cerrar mensaje al hacer clic fuera de él
-        window.addEventListener('click', function(event) {
-            if (event.target === messageBox) {
-                hideMessage();
-            }
-        });
-        
-        // Efecto de escritura en el título (opcional)
-        const title = document.querySelector('h1');
-        const originalText = title.textContent;
-        title.textContent = '';
-        
-        let i = 0;
-        function typeWriter() {
-            if (i < originalText.length) {
-                title.textContent += originalText.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        }
-        
-        // Iniciar efecto de escritura después de un breve retraso
-        setTimeout(typeWriter, 500);
-        
-        // Mostrar un mensaje de bienvenida después de cargar la página
-        window.addEventListener('load', function() {
+            
+            // Mensaje de bienvenida
             setTimeout(function() {
                 showMessage("Bienvenida, Yei. Esta página fue creada para ti con palabras que esperan ser leídas con el corazón. ❤️");
-            }, 1000);
+            }, 800);
+            
+            // Prevenir zoom en doble toque
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+            
+            // Feedback táctil en botones
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'translateY(2px)';
+                    this.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
         });
     </script>
 </body>
